@@ -2,6 +2,8 @@ import "./App.css";
 import Button from "./components/button/button";
 
 function App() {
+  // use useState Hook to save fetched data and display it to
+  // the user
   // insert fetch logic within function below
   const onButtonClick = () => {
     console.log('clicked!')
