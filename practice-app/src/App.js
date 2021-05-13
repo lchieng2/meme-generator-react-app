@@ -1,13 +1,24 @@
-import './App.css';
-import {useEffect} from 'react'
+import "./App.css";
+import Button from "./components/button/button";
 
 function App() {
-  useEffect(() => {
-    
-  }, [])
+  // use useState Hook to save fetched data and display it to
+  // the user
+  // insert fetch logic within function below
+  const onButtonClick = () => {
+    console.log('clicked!')
+  }
+
   return (
     <div className="App">
-      <p> Hello world </p>
+      <h1 style={{ textAlign: "center", marginTop: "25px" }}>
+        Practice React App
+      </h1>
+      <Button
+        name="Click me to fetch data!"
+        styles={{ margin: "20px auto 10px auto", padding: '10px' }}
+        onClick={onButtonClick}
+      />
     </div>
   );
 }
