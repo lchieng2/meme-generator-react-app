@@ -30,9 +30,9 @@ function App() {
         styles={{ margin: "20px auto 10px auto", padding: '10px' }}
         onClick={onButtonClick}
       />
-      <div>
+      {/* <div>
         {state}
-      </div>
+      </div> */}
     </div>
   );
 }
