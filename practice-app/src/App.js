@@ -5,14 +5,16 @@ import {useState} from "react"
 
 function App() {
   const [state, setState] = useState({})
+  let [rand, setRand] = useState(0)
 
   const onButtonClick = async () => {
     const url = process.env.REACT_APP_API_URL
       try {
         const res = await fetch(url)
         const {data} = await res.json()
-        console.log(data)
         setState(data)
+        const random = Math.floor(Math.random()*100)
+        setRand(random)
       } catch(error) {
         console.log(error)
       }
@@ -29,9 +31,9 @@ function App() {
         onClick={onButtonClick}
       />
       <div>
-        {state.memes && state.memes[0].name}
+        {state.memes && state.memes[rand].name}
       </div>
-      <img src={state.memes && state.memes[0].url}/>
+      <img src={state.memes && state.memes[rand].url} alt=""/>
     </div>
   );
 }
