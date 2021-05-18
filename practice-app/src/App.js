@@ -1,12 +1,23 @@
+import React from "react";
 import "./App.css";
 import Button from "./components/button/button";
+import {useState} from "react"
 
 function App() {
-  // use useState Hook to save fetched data and display it to
-  // the user
-  // insert fetch logic within function below
-  const onButtonClick = () => {
-    console.log('clicked!')
+  const [state, setState] = useState({})
+  const onButtonClick = async () => {
+    const url = process.env.API_URL || ""
+      try {
+        const res = await fetch(url)
+        console.log(res)
+        const data = await res.json()
+        setState(data)
+      } catch(error) {
+        console.log(error)
+      }
+    //  setState(state += 1)
+    // parse data to an object
+    // set data to state ^ in the try catch block
   }
 
   return (
@@ -19,6 +30,9 @@ function App() {
         styles={{ margin: "20px auto 10px auto", padding: '10px' }}
         onClick={onButtonClick}
       />
+      <div>
+        {state}
+      </div>
     </div>
   );
 }
