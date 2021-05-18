@@ -5,23 +5,17 @@ import {useState} from "react"
 
 function App() {
   const [state, setState] = useState({})
-  const onButtonClick =  () => {
-    const url = process.env.API_URL
+
+  const onButtonClick = async () => {
+    const url = process.env.REACT_APP_API_URL
       try {
-        fetch(url)
-          .then(response => response.json())
-          .then(data => console.log(data))
-        // console.log(res)
-        // const data = res.json()
-        // console.log(data)
-        // setState(data)
-        // console.log(state)
+        const res = await fetch(url)
+        const {data} = await res.json()
+        console.log(data)
+        setState(data)
       } catch(error) {
         console.log(error)
       }
-    //  setState(state += 1)
-    // parse data to an object
-    // set data to state ^ in the try catch block
   }
 
   return (
@@ -34,9 +28,10 @@ function App() {
         styles={{ margin: "20px auto 10px auto", padding: '10px' }}
         onClick={onButtonClick}
       />
-      {/* <div>
-        {state}
-      </div> */}
+      <div>
+        {state.memes && state.memes[0].name}
+      </div>
+      <img src={state.memes && state.memes[0].url}/>
     </div>
   );
 }
