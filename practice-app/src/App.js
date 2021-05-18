@@ -5,13 +5,17 @@ import {useState} from "react"
 
 function App() {
   const [state, setState] = useState({})
-  const onButtonClick = async () => {
-    const url = process.env.API_URL || ""
+  const onButtonClick =  () => {
+    const url = process.env.API_URL
       try {
-        const res = await fetch(url)
-        console.log(res)
-        const data = await res.json()
-        setState(data)
+        fetch(url)
+          .then(response => response.json())
+          .then(data => console.log(data))
+        // console.log(res)
+        // const data = res.json()
+        // console.log(data)
+        // setState(data)
+        // console.log(state)
       } catch(error) {
         console.log(error)
       }
