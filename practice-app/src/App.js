@@ -1,11 +1,16 @@
 import React from "react";
 import "./App.css";
 import Button from "./components/button/button";
+import Form from "./components/form/form";
 import {useState} from "react"
 
 function App() {
   const [state, setState] = useState({})
   let [rand, setRand] = useState(0)
+  let [form, setForm] = useState(false)
+  // once user clicks add caption button, toggle to be opposite of state
+  // update the name of the button to be true or false
+  // render the form
 
   const onButtonClick = async () => {
     const url = process.env.REACT_APP_API_URL
@@ -19,6 +24,9 @@ function App() {
         console.log(error)
       }
   }
+  const onCaptionButtonClick = () => {
+    setForm(!form)
+  }
 
   return (
     <div className="App">
@@ -31,9 +39,19 @@ function App() {
         onClick={onButtonClick}
       />
       <div>
-        {state.memes && state.memes[rand].name}
+        <div>
+          {state.memes && state.memes[rand].name}
+        </div>
+        <img src={state.memes && state.memes[rand].url} alt=""/>
       </div>
-      <img src={state.memes && state.memes[rand].url} alt=""/>
+      {state.memes ? <Button
+        name={form ? "Close caption form" : "Add caption"}
+        styles={{ margin: "20px auto 10px auto", padding: '10px' }}
+        onClick={onCaptionButtonClick}
+      /> : null}
+      {form && <Form
+        id = {state.memes[rand].id}
+      />}
     </div>
   );
 }
