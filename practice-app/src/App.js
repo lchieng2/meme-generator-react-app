@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="App">
       <h1 style={{ textAlign: "center", marginTop: "25px" }}>
-        Practice React App
+        Meme Creator App
       </h1>
       <Button
         name="Click me to fetch data!"
