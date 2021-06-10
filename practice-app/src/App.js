@@ -8,6 +8,7 @@ function App() {
   const [state, setState] = useState({})
   let [rand, setRand] = useState(0)
   let [form, setForm] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
   // once user clicks add caption button, toggle to be opposite of state
   // update the name of the button to be true or false
   // render the form
@@ -20,12 +21,19 @@ function App() {
         setState(data)
         const random = Math.floor(Math.random()*100)
         setRand(random)
+        setImageUrl('')
       } catch(error) {
         console.log(error)
       }
   }
   const onCaptionButtonClick = () => {
     setForm(!form)
+    setImageUrl('')
+  }
+
+  const updateImageUrlState = (string) => {
+    setImageUrl(string)
+    console.log(imageUrl)
   }
 
   return (
@@ -51,7 +59,11 @@ function App() {
       /> : null}
       {form && <Form
         id = {state.memes[rand].id}
+        updateImageUrlState={updateImageUrlState}
       />}
+      <div>
+        {form && <img src={state.memes && imageUrl} alt=""/>}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import Button from "../button/button";
 import {useState} from "react"
+import './form.css';
+
 const Form = (props) => {
     const [state, setState] = useState({
         // username: "",
@@ -15,23 +17,27 @@ const Form = (props) => {
         //lookup template literals, bracket notation for objectgs, dot notation for objects
     }
 
+    const objectToQueryParam = (obj) => {
+        const params = Object.entries(obj).map(([key, value]) => `${key}=${value}`); // array of key/value pairs formatted like key=value
+        return "?" + params.join("&");
+    }
+
     const onSubmitForm = async (event) => {
         event.preventDefault()
         try {
-            const data = await fetch('https://api.imgflip.com/caption_image', {
-                method: 'POST',
-                headers: {
-                    "content-type": "Application/json",
-                },
-                body: {
-                    template_id: id,
-                    username: process.env.REACT_APP_IMGFLIP_API_USERNAME,
-                    password: process.env.REACT_APP_IMGFLIP_API_PASSWORD,
-                    text0: state.top,
-                    text1: state.bot
-                }
-            })
-            console.log(data)
+            const params = {
+                template_id: id,
+                username: process.env.REACT_APP_IMGFLIP_API_USERNAME,
+                password: process.env.REACT_APP_IMGFLIP_API_PASSWORD,
+                text0: state.top,
+                text1: state.bot
+            }
+            const response = await fetch(
+                // apparently, format is url + ?template_id=xxx&username=xxx&password=xxx ...
+                `https://api.imgflip.com/caption_image${objectToQueryParam(params)}`
+            );
+            const json = await response.json();
+            props.updateImageUrlState(json.data.url)
         } catch(error) {
             console.log(error)
         }
@@ -47,9 +53,9 @@ const Form = (props) => {
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" name="password" onChange={onInputChange}/><br></br> */}
             <label htmlFor="top">Top text:</label>
-            <input type="text" id="top" name="top" onChange={onInputChange}/><br></br>
+            <input type="text" id="top" name="top" className="DottedBox" autoComplete="off" onChange={onInputChange}/><br></br>
             <label htmlFor="bot">Bottom text:</label>
-            <input type="text" id="bot" name="bot" onChange={onInputChange}/><br></br>
+            <input type="text" id="bot" name="bot" className="DottedBox" autoComplete="off" onChange={onInputChange}/><br></br>
             <Button type="submit" name="submit"/>
         </form>
         </>

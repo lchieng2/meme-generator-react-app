@@ -1,0 +1,8 @@
+.DottedBox {
+    margin: 20px;
+    border: 5px dotted pink;
+}
+
+Button {
+    margin: 20px;
+}
